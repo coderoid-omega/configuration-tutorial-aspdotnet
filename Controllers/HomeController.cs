@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ConfigExample.Options;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ConfigExample.Controllers
 {
@@ -12,8 +13,8 @@ namespace ConfigExample.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            //ViewBag.MyKey = _configuration.GetValue<string>("MyKey");
-            ViewBag.MyKey = _configuration.GetValue<string>("ClientData:ClientId");
+            var clientOptions = _configuration.GetSection("ClientData").Get<ClientDataOption>();
+            ViewBag.MyKey = (clientOptions??new ClientDataOption()).ClientId;
             ViewBag.MyAPIKey = _configuration.GetValue<string>("MyAPIKey", "A new key found");
             return View();
         }
