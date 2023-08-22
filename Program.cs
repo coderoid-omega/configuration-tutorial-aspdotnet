@@ -8,7 +8,7 @@ app.UseRouting();
 //Adding endpoints
 app.UseEndpoints(endpoints =>
 {
-    endpoints.Map("/", async context =>
+    endpoints.Map("/config", async context =>
     {
         //way 1
         await context.Response.WriteAsync(app.Configuration["MyKey"].ToString() + "\n");
