@@ -17,6 +17,12 @@ namespace ConfigExample.Controllers
         [Route("/")]
         public IActionResult Index()
         {
+            // In this Configuration will be read from User Secrets
+            //To enable user secrets use following command in Powershell or VS terminal
+            //dotnet user-secrets init
+            //dotnet user-secrets set "ClientData:ClientId" "Client Value in User secrets"
+            //dotnet user-secrets list
+            
             ViewBag.MyKey = _option.ClientId;
             ViewBag.MyAPIKey = _option.ClientSecret;
             return View();
