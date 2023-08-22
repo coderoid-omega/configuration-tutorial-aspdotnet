@@ -1,5 +1,9 @@
+using ConfigExample.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+//Injecting App setting configuration specific section as a service to the application
+builder.Services.Configure<ClientDataOption>(builder.Configuration.GetSection("ClientData"));
 var app = builder.Build();
 
 app.UseStaticFiles();

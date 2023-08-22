@@ -1,21 +1,24 @@
 ﻿using ConfigExample.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace ConfigExample.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConfiguration _configuration;
-        public HomeController(IConfiguration configuration)
+        private readonly ClientDataOption _option;
+
+        //We are usinh IOptions built in class to inject custom Configuration defined in the program.cs file
+        public HomeController(IOptions<ClientDataOption> options)
         {
-            _configuration = configuration;
+            _option = options.Value;
         }
+
         [Route("/")]
         public IActionResult Index()
         {
-            var clientOptions = _configuration.GetSection("ClientData").Get<ClientDataOption>();
-            ViewBag.MyKey = (clientOptions??new ClientDataOption()).ClientId;
-            ViewBag.MyAPIKey = _configuration.GetValue<string>("MyAPIKey", "A new key found");
+            ViewBag.MyKey = _option.ClientId;
+            ViewBag.MyAPIKey = _option.ClientSecret;
             return View();
         }
     }
